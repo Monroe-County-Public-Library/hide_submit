@@ -1,5 +1,3 @@
-// $Id$
-
 -------------- OVERVIEW -------------------------------------------
 
 hide_submit module provides a way to hide the submit button in forms after 

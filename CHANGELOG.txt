@@ -1,5 +1,3 @@
-; $Id$
-
 -- 2011-10-17 version 6.x-1.11
 
 * #1030622 Added using Drupal.behaviors (VladSavitsky)
