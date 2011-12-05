@@ -1,3 +1,7 @@
+-- 2011-12-03 Version 7.x-1.0-dev
+
+* preliminary release, port to D7
+
 -- 2011-10-17 version 6.x-1.11
 
 * #1030622 Added using Drupal.behaviors (VladSavitsky)

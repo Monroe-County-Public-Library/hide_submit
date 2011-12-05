@@ -1,6 +1,6 @@
-; $Id$
 name = "Hide submit button"
 description = "Hide submit button after clicked to avoid duplicate posting"
 
+configure = admin/config/content/hide-submit 
 core = 7.x
 
