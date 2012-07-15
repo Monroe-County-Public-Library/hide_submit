@@ -22,9 +22,9 @@ function hide_submit_install() {
  */
 function hide_submit_uninstall() {
   // Delete any variables that have been set.
-  // TODO convert this statement to the D7 database API syntax.
-  $result = db_query("SELECT name FROM {variable} WHERE name LIKE 'hide_submit_%'");
-  while ($row = db_fetch_object($result)) {
+  $result = db_query("SELECT name FROM {variable} WHERE name LIKE 'hide_submit_%'")
+    ->fetchAll();
+  while ($row = array_pop($result)) {
     variable_del($row->name);
   }
 
