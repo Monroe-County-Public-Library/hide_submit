@@ -87,7 +87,7 @@ function hide_submit_menu() {
     'title' => 'Confirm delete',
     'description' => 'Delete an image file',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('hide_submit_admin_delete_image', 4),
+    'page arguments' => array('hide_submit_admin_delete_image', 5),
     'access arguments' => array('administer site configuration'),
     'file' => 'hide_submit_admin.inc',
     'type' => MENU_CALLBACK,
@@ -337,8 +337,7 @@ function _hide_submit_get_message() {
   $image =  _hide_submit_get_image( );
 
   if ($image !== FALSE) {
-    $url = (url($image) == $image) ? $image : (base_path() . $image);
-    $image = '<img src="' . check_url($url) . '" alt="" title=""  />&nbsp;';
+    $image =  theme('image', array('path' => $image)) . '&nbsp;';
   }
 
   return '<p class="hide_submit">' . $image . ' ' . $message . ' </p>';
