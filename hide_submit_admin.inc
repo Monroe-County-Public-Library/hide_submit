@@ -47,9 +47,7 @@ function hide_submit_admin_delete_image_submit($form, &$form_state) {
   $filepath = $form_state['values']['hide_submit_image_file_path'];
   $filename = $form_state['values']['hide_submit_image_file_name'];
 
-  if (file_exists($filepath) &&
-        $filepath &&
-        unlink($filepath) ) {
+  if (file_unmanaged_delete($filepath)) {
 
     drupal_set_message( t('%name deleted succesfully.', array('%name' => check_plain($filename))) );
     $image = variable_get('hide_submit_image', HIDE_SUBMIT_DEFAULT_IMAGE);

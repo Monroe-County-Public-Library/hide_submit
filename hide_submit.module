@@ -220,7 +220,7 @@ function _hide_submit_add_exclude_class(&$elements) {
 
   // Add class to submit buttons
   if (isset($elements['#type']) && $elements['#type'] == 'submit') {
-    $elements['#attributes']['class'] = empty($elements['#attributes']['class']) ? HIDE_SUBMIT_EXCLUDE_CLASS  : $elements['#attributes']['class'] . ' ' . HIDE_SUBMIT_EXCLUDE_CLASS;
+    $elements['#attributes']['class'][] = HIDE_SUBMIT_EXCLUDE_CLASS;
   }
 }
 
@@ -337,7 +337,7 @@ function _hide_submit_get_message() {
   $image =  _hide_submit_get_image( );
 
   if ($image !== FALSE) {
-    $image =  theme('image', array('path' => $image)) . '&nbsp;';
+    $image = '<img src="'.file_create_url($image).'" alt="" title=""  /> &nbsp;';
   }
 
   return '<p class="hide_submit">' . $image . ' ' . $message . ' </p>';
