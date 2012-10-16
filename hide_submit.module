@@ -24,7 +24,11 @@ function hide_submit_init() {
   ));
 
   // Allow other modules to modify this behavior.
-  $hide_submit_settings = module_invoke_all('hide_submit_alter', $hide_submit_settings);
+  $altered_hide_submit_settings = module_invoke_all('hide_submit_alter', $hide_submit_settings);
+  if (!empty($altered_hide_submit_settings)) {
+    // Ovewrwrite the settings with altered values.
+    $hide_submit_settings = $altered_hide_submit_settings+$hide_submit_settings;
+  }
 
   if ($hide_submit_settings['hide_submit']['hide_submit_status']) {
     drupal_add_js($hide_submit_settings, 'setting');
