@@ -1,61 +1,48 @@
-(function($) {
-	
-Drupal.behaviors.hide_submit = {
-  attach: function(context, settings) {
-    // getting the seetings from Drupal.settings
-	var settings = Drupal.settings.hide_submit;
-	if (settings.dbg) {
-	  // For debugging, this addtion to the script will paint included and excluded buttons
-	  $('input:submit', context).css({border:'6px red solid'});
-	  $(settings.selector, context).css({border:'6px green solid'});
-	}
-	// Hide buttons and inject message
-	if (settings.mode == 'hide') {
-	  if (settings.image) {
-	    $("<img>").attr("src", settings.image);
-	  }
-	    $(settings.selector, context).click(function() {
-	      hide_submit_button(this, settings.message, context);
-	    })
-	    // Submit when ENTER is pressed
-	    if (settings.keypress) {
-	      $(settings.selector, context).keypress(function() {
-	        $(this).parents("form").submit();
-	        hide_submit_button(this, settings.message, context);
-	      })
-	    }
-	}
-	else { // mode == 'disable'
-	  $(settings.selector, context).click(function() {
-	    disable_submit_button(this, context);
-	  });
-	  // Submit when ENTER is pressed
-	  if (settings.keypress) {
-	    $(settings.selector, context).keypress(function() {
-	      disable_submit_button(this, context);
-	    });
-	  }
-    }
-	  
-    // Hide button and siblings
-    function hide_submit_button(obj, message, context) {
-      $(obj, context).hide().siblings('input:submit').hide().end().after(message);
-    }
-  
-    // Disable button and siblings
-    function disable_submit_button(obj, context) {
-      var $obj = $(obj, context);
-	  // Workaround for comment-form and node-form
-	  // inject missing "op" for preview or delete etc.
-	  $("#edit-hide-submit-fake-op", context)
-	    .attr("name", "op")
-	    .attr("value", $obj.attr("value"));
-	      $obj
-	        .attr("disabled", "disabled")
-	        .siblings('input:submit').attr("disabled", "disabled")
-	        .parents("form").submit();
-    }
+(function ($) {
+
+Drupal.behaviors.hideSubmitBlockit = {
+  attach: function(context) {
+    $('form').each(function (i) {
+      var form = $(this);
+      $('input.form-submit', form).click(function (e) {
+        var el = $(this);
+        el.after('<input type="hidden" name="' + el.attr('name') + '" value="' + el.attr('value') + '" />');
+        return true;
+      });
+    });
+
+    $('form').submit(function (e) {
+      var settings = Drupal.settings.hide_submit;
+      var inp;
+      if (settings.hide_submit_method == 'disable') {
+        $('input.form-submit', $(this)).attr('disabled', 'disabled').each(function (i) {
+          if (settings.hide_submit_css) {
+            $(this).addClass(settings.hide_submit_css);
+          }
+          if (settings.hide_submit_abtext) {
+            $(this).val($(this).val() + ' ' + settings.hide_submit_abtext);
+          }
+          inp = $(this);
+        });
+
+        if (inp && settings.hide_submit_atext) {
+          inp.after('<span>' + Drupal.checkPlain(settings.hide_submit_atext) + '</span>');
+        }
+      }
+      else {
+        var pdiv = '<div' + (settings.hide_submit_hide_css?' class="' + Drupal.checkPlain(settings.hide_submit_hide_css) + '"':'') + '>' + Drupal.checkPlain(settings.hide_submit_hide_text) + '</div>';
+        if (settings.hide_submit_hide_fx) {
+          $('input.form-submit', $(this)).fadeOut(100).eq(0).after(pdiv);
+          $('input.form-submit', $(this)).next().fadeIn(100);
+        }
+        else {
+          $('input.form-submit', $(this)).css('display', 'none').eq(0).after(pdiv);
+        }
+      }
+      return true;
+    });
   }
 };
 
-}(jQuery));
+})(jQuery);
+

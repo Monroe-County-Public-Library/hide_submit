@@ -1,6 +1,10 @@
 name = "Hide submit button"
-description = "Hide submit button after clicked to avoid duplicate posting"
-
-configure = admin/config/content/hide-submit 
+description = "Hides the submit button after a form is submitted to avoid duplicate posting"
 core = 7.x
+tags[] = content
+files[] = hide_submit.admin.inc
+
+configure = admin/config/content/hide-submit
+
+
 

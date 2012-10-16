@@ -7,26 +7,16 @@
  * Installation and update procedures are defined in this file
  */
 
-
-/**
- * Implement hook install
- */
-function hide_submit_install() {
-  // TODO update_sql has been removed. Use the database API for any schema or data changes.
-  // update_sql("UPDATE {system} SET weight = 10 WHERE type = 'module' AND name = 'hide_submit'");
-  drupal_set_message( st('Hide submit module installed.') );
-}
-
 /**
  * Implement hook uninstall
  */
 function hide_submit_uninstall() {
   // Delete any variables that have been set.
-  $result = db_query("SELECT name FROM {variable} WHERE name LIKE 'hide_submit_%'")
-    ->fetchAll();
-  while ($row = array_pop($result)) {
-    variable_del($row->name);
-  }
-
-  drupal_set_message( st('Hide submit module variables deleted.<br />To completely remove this module, delete the hide_submit directory from your files directory.') );
+  variable_del('hide_submit_method');
+  variable_del('hide_submit_css');
+  variable_del('hide_submit_abtext');
+  variable_del('hide_submit_atext');
+  variable_del('hide_submit_hide_css');
+  variable_del('hide_submit_hide_text');
+  variable_del('hide_submit_hide_fx');
 }
