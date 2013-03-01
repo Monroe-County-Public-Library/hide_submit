@@ -22,6 +22,15 @@ function hide_submit_settings() {
     '#description' => t('Choose the blocking method.'),
   );
 
+  $form['hide_submit_reset_time'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Reset buttons after some time (ms).'),
+    '#description' => t('Enter a value in milliseconds after which all buttons will be enabled. To disable this enter 0.'),
+    '#default_value' => variable_get('hide_submit_reset_time', 5000),
+    '#element_validate' => array('_hide_submit_is_numeric'),
+    '#required' => TRUE,
+  );
+
   $form['hide_submit_disable'] = array(
     '#type' => 'fieldset',
     '#title' => t('Disabling settings'),
@@ -65,4 +74,10 @@ function hide_submit_settings() {
   );
 
   return system_settings_form($form);
+}
+
+function _hide_submit_is_numeric($element, &$form_state, $form) {
+  if (!is_numeric($element['#value']) || !ctype_digit($element['#value'])) {
+    form_error($element, t('This field only accepts integers.'));
+  }
 }

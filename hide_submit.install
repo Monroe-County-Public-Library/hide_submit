@@ -19,4 +19,5 @@ function hide_submit_uninstall() {
   variable_del('hide_submit_hide_css');
   variable_del('hide_submit_hide_text');
   variable_del('hide_submit_hide_fx');
+  variable_del('hide_submit_reset_time');
 }

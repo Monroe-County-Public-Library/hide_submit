@@ -21,6 +21,7 @@ function hide_submit_init() {
     'hide_submit_hide_css' => variable_get('hide_submit_hide_css', 'hide-submit-processing'),
     'hide_submit_hide_text' => t(variable_get('hide_submit_hide_text', 'Processing...')),
     'hide_submit_hide_fx' => t(variable_get('hide_submit_hide_fx', FALSE)),
+    'hide_submit_reset_time' => (int)variable_get('hide_submit_reset_time', 5000),
   ));
 
   // Allow other modules to modify this behavior.
