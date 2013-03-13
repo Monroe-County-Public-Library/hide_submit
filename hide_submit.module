@@ -33,7 +33,7 @@ function hide_submit_init() {
 
   if ($hide_submit_settings['hide_submit']['hide_submit_status']) {
     drupal_add_js($hide_submit_settings, 'setting');
-    drupal_add_js(drupal_get_path('module', 'hide_submit') . '/hide_submit.js');
+    drupal_add_js(drupal_get_path('module', 'hide_submit') . '/hide_submit.js', array('weight' => 10));
     drupal_add_css(drupal_get_path('module', 'hide_submit') . '/hide_submit.css');
   }
 }

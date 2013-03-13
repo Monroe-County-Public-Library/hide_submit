@@ -14,7 +14,7 @@ Drupal.behaviors.hideSubmitBlockit = {
       });
 
       // Bind to form submit.
-      $form.submit(function (e) {
+      $('form', context).submit(function (e) {
         var settings = Drupal.settings.hide_submit;
         var $inp;
         if (!e.isPropagationStopped()) {
