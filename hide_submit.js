@@ -7,7 +7,7 @@ Drupal.behaviors.hideSubmitBlockit = {
       var $form = $(this);
 
       // Bind to input elements.
-      $('input.form-submit', $form).click(function (e) {
+      $('input.form-submit, button.form-submit', $form).click(function (e) {
         var el = $(this);
         el.after('<input type="hidden" name="' + el.attr('name') + '" value="' + el.attr('value') + '" />');
         return true;
@@ -19,7 +19,7 @@ Drupal.behaviors.hideSubmitBlockit = {
         var $inp;
         if (!e.isPropagationStopped()) {
           if (settings.hide_submit_method == 'disable') {
-            $('input.form-submit', $form).attr('disabled', 'disabled').each(function (i) {
+            $('input.form-submit, button.form-submit', $form).attr('disabled', 'disabled').each(function (i) {
               var $button = $(this);
               if (settings.hide_submit_css) {
                 $button.addClass(settings.hide_submit_css);
@@ -37,11 +37,11 @@ Drupal.behaviors.hideSubmitBlockit = {
           else {
             var pdiv = '<div class="hide-submit-text' + (settings.hide_submit_hide_css ? ' ' + Drupal.checkPlain(settings.hide_submit_hide_css) + '"' : '') + '>' + Drupal.checkPlain(settings.hide_submit_hide_text) + '</div>';
             if (settings.hide_submit_hide_fx) {
-              $('input.form-submit', $form).addClass(settings.hide_submit_css).fadeOut(100).eq(0).after(pdiv);
-              $('input.form-submit', $form).next().fadeIn(100);
+              $('input.form-submit, button.form-submit', $form).addClass(settings.hide_submit_css).fadeOut(100).eq(0).after(pdiv);
+              $('input.form-submit, button.form-submit', $form).next().fadeIn(100);
             }
             else {
-              $('input.form-submit', $form).addClass(settings.hide_submit_css).hide().eq(0).after(pdiv);
+              $('input.form-submit, button.form-submit', $form).addClass(settings.hide_submit_css).hide().eq(0).after(pdiv);
             }
           }
           // Add a timeout to rerset the buttons (if needed).
@@ -68,13 +68,13 @@ Drupal.behaviors.hideSubmitBlockit = {
 
       var settings = Drupal.settings.hide_submit;
       if (settings.hide_submit_method == 'disable') {
-        $('input.' + Drupal.checkPlain(settings.hide_submit_css), form)
+        $('input.' + Drupal.checkPlain(settings.hide_submit_css) + ', button.' + Drupal.checkPlain(settings.hide_submit_css), form)
           .removeClass(Drupal.checkPlain(settings.hide_submit_hide_css))
           .removeAttr('disabled');
         $('.hide-submit-text', form).remove();
       }
       else {
-        $('input.' + Drupal.checkPlain(settings.hide_submit_css), form)
+        $('input.' + Drupal.checkPlain(settings.hide_submit_css) + ', button.' + Drupal.checkPlain(settings.hide_submit_css), form)
           .stop()
           .removeClass(Drupal.checkPlain(settings.hide_submit_hide_css))
           .show();
