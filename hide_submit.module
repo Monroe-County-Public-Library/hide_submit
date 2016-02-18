@@ -69,6 +69,9 @@ function hide_submit_attach_js_css(&$form) {
  * Implements hook_form_alter().
  */
 function hide_submit_form_alter(&$form, &$form_state, $form_id) {
+  if (user_access('bypass hide submit')) {
+    return;
+  }
   if (hide_submit_add_settings()) {
     hide_submit_attach_js_css($form);
     $form['#after_build'][] = 'hide_submit_after_build';
@@ -97,10 +100,26 @@ function hide_submit_menu() {
     'description' => 'Configure the hiding of the form submit button.',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('hide_submit_settings'),
-    'access arguments' => array('administer site configuration'),
+    'access arguments' => array('administer hide submit'),
     'file' => 'hide_submit.admin.inc',
     'type' => MENU_NORMAL_ITEM,
   );
 
   return $items;
+}
+
+/**
+ * Implements hook_permission().
+ */
+function hide_submit_permission() {
+  return array(
+    'administer hide submit' => array(
+      'title' => t('Administer hide submit module'),
+      'description' => t('Perform administration tasks for hide submit module.'),
+    ),
+    'bypass hide submit' => array(
+      'title' => t('Bypass hide submit button'),
+      'description' => t('Disables hide_submit functionality for users'),
+    ),
+  );
 }
