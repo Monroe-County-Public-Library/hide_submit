@@ -44,26 +44,3 @@ The original hide_submit jQuery snippet was taken from Ted Serbinski's blog
 
 See also this discussion:
 http://drupal.org/node/107358
-
-
-ADVANCED CHANGES
-================
-You can alter the style of affected buttons by overriding css rules. The two
-css style rules to consider are:
-
-div.hide-submit-disable - for disabled buttons.
-div.hide-submit-processing - for hidden buttons.
-
-There are two hidden variables for the values of the css classes. You can modify
-these by setting a variable in the $conf array in your settings.php or using the
-drush vset command. The variables are: hide_submit_css and hide_submit_hide_css.
-
-The module calls a hook (hook_hide_submit_alter) to let other modules modify the
-behavior of the module. This could be used, for example, to create a random
-image effect by tweaking the css styles on each page load.
-
-The hidden variable hide_submit_status allows a site to enable or disable the
-module. This is most useful as part of the hook_hide_submit_alter to disable
-the module on certain pages.
-
-See hide_submit.api.php for an example implementation of hook_hide_submit_alter.
