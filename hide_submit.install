@@ -12,15 +12,55 @@
  */
 function hide_submit_uninstall() {
   // Delete any variables that have been set.
-  variable_del('hide_submit_method');
-  variable_del('hide_submit_css');
-  variable_del('hide_submit_abtext');
-  variable_del('hide_submit_atext');
-  variable_del('hide_submit_hide_css');
-  variable_del('hide_submit_hide_text');
-  variable_del('hide_submit_hide_fx');
-  variable_del('hide_submit_reset_time');
-  variable_del('hide_submit_indicator_style');
-  variable_del('hide_submit_spinner_color');
-  variable_del('hide_submit_spinner_lines');
+  config_clear('hide_submit.settings', 'hide_submit_method');
+  config_clear('hide_submit.settings', 'hide_submit_css');
+  config_clear('hide_submit.settings', 'hide_submit_abtext');
+  config_clear('hide_submit.settings', 'hide_submit_atext');
+  config_clear('hide_submit.settings', 'hide_submit_hide_css');
+  config_clear('hide_submit.settings', 'hide_submit_hide_text');
+  config_clear('hide_submit.settings', 'hide_submit_hide_fx');
+  config_clear('hide_submit.settings', 'hide_submit_reset_time');
+  config_clear('hide_submit.settings', 'hide_submit_indicator_style');
+  config_clear('hide_submit.settings', 'hide_submit_spinner_color');
+  config_clear('hide_submit.settings', 'hide_submit_spinner_lines');
+}
+
+/**
+ * Migrate hide_submit variables to config.
+ */
+function hide_submit_update_1000() {
+  $config = config('hide_submit.settings');
+  $config->set('hide_submit_method', update_variable_get('hide_submit_method', ''));
+  $config->set('hide_submit_reset_time', update_variable_get('hide_submit_reset_time', '5000'));
+  $config->set('hide_submit_abtext', update_variable_get('hide_submit_abtext', ''));
+  $config->set('hide_submit_atext', update_variable_get('hide_submit_atext', ''));
+  $config->set('hide_submit_hide_fx', update_variable_get('hide_submit_hide_fx', array()));
+  $config->set('hide_submit_hide_text', update_variable_get('hide_submit_hide_text', 'Processing...'));
+  $config->set('hide_submit_indicator_style', update_variable_get('hide_submit_indicator_style', 'expand-left'));
+  $config->set('hide_submit_spinner_color', update_variable_get('hide_submit_spinner_color', '#000'));
+  $config->set('hide_submit_spinner_lines', update_variable_get('hide_submit_spinner_lines', '12'));
+  $config->set('hide_submit_status', update_variable_get('hide_submit_status', TRUE));
+  $config->set('hide_submit_css', update_variable_get('hide_submit_css', 'hide-submit-disable'));
+  $config->set('hide_submit_hide_css', update_variable_get('hide_submit_hide_css', 'hide-submit-processing'));
+  $config->save();
+
+  update_variable_del('hide_submit_method');
+  update_variable_del('hide_submit_reset_time');
+  update_variable_del('hide_submit_abtext');
+  update_variable_del('hide_submit_atext');
+  update_variable_del('hide_submit_hide_fx');
+  update_variable_del('hide_submit_hide_text');
+  update_variable_del('hide_submit_indicator_style');
+  update_variable_del('hide_submit_spinner_color');
+  update_variable_del('hide_submit_spinner_lines');
+  update_variable_del('hide_submit_status');
+  update_variable_del('hide_submit_css');
+  update_variable_del('hide_submit_hide_css');
+}
+
+/**
+ * Implements hook_install().
+ */
+function hide_submit_install() {
+  // Dynamically generated variable data was detected.
 }

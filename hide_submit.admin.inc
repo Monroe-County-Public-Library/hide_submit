@@ -12,7 +12,9 @@
  * @see system_settings_form()
  */
 function hide_submit_settings() {
+  $config = config('hide_submit.settings');
   $form = array();
+  $form['#config'] = 'hide_submit.settings';
 
   $form['hide_submit_method'] = array(
     '#type' => 'select',
@@ -21,7 +23,7 @@ function hide_submit_settings() {
       'hide' => t('Hide the submit buttons.'),
       'indicator' => t('Built-in loading indicator.'),
     ),
-    '#default_value' => variable_get('hide_submit_method', 'disable'),
+    '#default_value' => $config->get('hide_submit_method'),
     '#title' => t('Blocking method'),
     '#description' => t('Choose the blocking method.'),
   );
@@ -30,7 +32,7 @@ function hide_submit_settings() {
     '#type' => 'textfield',
     '#title' => t('Reset buttons after some time (ms).'),
     '#description' => t('Enter a value in milliseconds after which all buttons will be enabled. To disable this enter 0.'),
-    '#default_value' => variable_get('hide_submit_reset_time', 5000),
+    '#default_value' => $config->get('hide_submit_reset_time'),
     '#element_validate' => array('_hide_submit_is_numeric'),
     '#required' => TRUE,
   );
@@ -46,14 +48,14 @@ function hide_submit_settings() {
     '#type' => 'textfield',
     '#title' => t('Append to buttons'),
     '#description' => t('This text will be appended to each of the submit buttons.'),
-    '#default_value' => variable_get('hide_submit_abtext', ''),
+    '#default_value' => $config->get('hide_submit_abtext'),
   );
 
   $form['hide_submit_disable']['hide_submit_atext'] = array(
     '#type' => 'textarea',
     '#title' => t('Add next to buttons'),
     '#description' => t('This text will be added next to the submit buttons.'),
-    '#default_value' => variable_get('hide_submit_atext', ''),
+    '#default_value' => $config->get('hide_submit_atext'),
   );
 
   $form['hide_submit_hide'] = array(
@@ -66,14 +68,14 @@ function hide_submit_settings() {
   $form['hide_submit_hide']['hide_submit_hide_fx'] = array(
     '#type' => 'checkbox',
     '#title' => t('Use fade effects?'),
-    '#default_value' => variable_get('hide_submit_hide_fx', FALSE),
+    '#default_value' => $config->get('hide_submit_hide_fx'),
     '#description' => t('Enabling a fade in / out effect.'),
   );
 
   $form['hide_submit_hide']['hide_submit_hide_text'] = array(
     '#type' => 'textfield',
     '#title' => t('Processing text'),
-    '#default_value' => variable_get('hide_submit_hide_text', 'Processing...'),
+    '#default_value' => $config->get('hide_submit_hide_text'),
     '#description' => t('This text will be shown to the user instead of the submit buttons.'),
   );
 
@@ -86,9 +88,9 @@ function hide_submit_settings() {
       <a href="!library" target="_blank" rel="noopener">ladda.js jQuery library
       </a>. Examples of these styles can be found on the <a href="!examples"
       target="_blank" rel="noopener">Ladda example page</a>.', array(
-        '!library' => '//github.com/hakimel/Ladda',
-        '!examples' => '//lab.hakim.se/ladda/',
-      )),
+      '!library' => '//github.com/hakimel/Ladda',
+      '!examples' => '//lab.hakim.se/ladda/',
+    )),
   );
 
   $form['hide_submit_indicator']['hide_submit_indicator_style'] = array(
@@ -107,7 +109,7 @@ function hide_submit_settings() {
       'slide-up' => t('slide-up'),
       'slide-down' => t('slide-down'),
     ),
-    '#default_value' => variable_get('hide_submit_indicator_style', 'expand-left'),
+    '#default_value' => $config->get('hide_submit_indicator_style'),
     '#title' => t('Built-In Loading Indicator Style'),
   );
 
@@ -120,20 +122,24 @@ function hide_submit_settings() {
       '#D3D3D3' => t('Light Grey'),
       '#fff' => t('White'),
     ),
-    '#default_value' => variable_get('hide_submit_spinner_color', '#000'),
+    '#default_value' => $config->get('hide_submit_spinner_color'),
     '#title' => t('Built-In Loading Indicator Spinner Color'),
   );
 
   $form['hide_submit_indicator']['hide_submit_spinner_lines'] = array(
     '#type' => 'textfield',
     '#title' => t('The number of lines for the spinner'),
-    '#default_value' => variable_get('hide_submit_spinner_lines', 12),
+    '#default_value' => $config->get('hide_submit_spinner_lines'),
     '#element_validate' => array('_hide_submit_is_numeric'),
   );
 
   return system_settings_form($form);
 }
 
+/**
+ * @todo Please document this function.
+ * @see http://drupal.org/node/1354
+ */
 function _hide_submit_is_numeric($element, &$form_state, $form) {
   if (!is_numeric($element['#value']) || !ctype_digit($element['#value'])) {
     form_error($element, t('This field only accepts integers.'));

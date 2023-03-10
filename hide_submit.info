@@ -1,9 +1,8 @@
 name = "Hide submit button"
 description = "Hides the submit button after a form is submitted to avoid duplicate posting"
-core = 7.x
+backdrop = 1.x
+type = module
 tags[] = content
-files[] = hide_submit.admin.inc
-
 configure = admin/config/content/hide-submit
 
 
